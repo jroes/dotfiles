@@ -1,1 +1,7 @@
 alias reload!='. ~/.zshrc'
+alias ms='make start'
+alias g='git'
+alias grd='git reflow deliver'
+alias grv='git reflow review'
+alias tagthirty='ctags -e -R --exclude=.git --exclude=log *'
+alias be='bundle exec'
