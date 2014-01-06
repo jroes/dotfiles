@@ -3,7 +3,8 @@ export ZSH=$HOME/.dotfiles
 
 # your project folder that we can `c [tab]` to
 export PROJECTS=~/src
-export PATH="/Applications/Postgres.app/Contents/MacOS/bin:$HOME/.cask/bin:$PATH"
+export GOPATH=$HOME/go
+export PATH="/Applications/Postgres93.app/Contents/MacOS/bin:$HOME/.cask/bin:$PATH:$GOPATH/bin"
 
 # use .localrc for SUPER SECRET CRAP that you don't
 # want in your public, versioned repo.
