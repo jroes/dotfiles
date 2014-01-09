@@ -1,7 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =5
-let g:netrw_dirhist_1='/Users/jroes/src/vault-tools/pkg'
-let g:netrw_dirhist_2='/Users/jroes/src/vault-tools'
-let g:netrw_dirhist_3='/Users/jroes/src'
-let g:netrw_dirhist_4='/Users/jroes/src/vault-cashier'
-let g:netrw_dirhist_5='/Users/jroes/src/vault-cashier/bin'
