@@ -1,4 +1,23 @@
-execute pathogen#infect()
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+Bundle 'gmarik/vundle'
+Bundle 'mustache/vim-mustache-handlebars'
+Bundle 'kien/ctrlp.vim'
+Bundle 'tpope/vim-bundler'
+Bundle 'tpope/vim-endwise'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-rails'
+Bundle 'tpope/vim-rake'
+Bundle 'tpope/vim-sensible'
+Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-unimpaired'
+Bundle 'tpope/vim-sensible'
+Bundle 'Keithbsmiley/investigate.vim'
+Bundle 'justinmk/vim-sneak'
+
+let g:sneak#streak = 1
+
 set smartindent
 set autoindent
 set nocompatible
