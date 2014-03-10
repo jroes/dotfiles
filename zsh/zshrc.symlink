@@ -4,7 +4,7 @@ export ZSH=$HOME/.dotfiles
 # your project folder that we can `c [tab]` to
 export PROJECTS=~/src
 export GOPATH=$HOME/go
-export PATH="/Applications/Postgres93.app/Contents/MacOS/bin:$HOME/.cask/bin:$PATH:$GOPATH/bin"
+export PATH="/Applications/Postgres93.app/Contents/MacOS/bin:$HOME/.cask/bin:$PATH:$GOPATH/bin:/Users/jroes/bin"
 
 # use .localrc for SUPER SECRET CRAP that you don't
 # want in your public, versioned repo.
@@ -50,3 +50,7 @@ source /usr/local/share/chruby/auto.sh
 export PATH="/usr/local/heroku/bin:$PATH"
 unsetopt correct
 bindkey -v
+
+# Fix issue with annoying unix sockets junk going on:
+# http://stackoverflow.com/questions/13868730/socket-file-var-pgsql-socket-s-pgsql-5432-missing-in-mountain-lion-os-x-ser
+export PGHOST=localhost
