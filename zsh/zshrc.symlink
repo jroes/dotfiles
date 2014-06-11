@@ -5,6 +5,8 @@ export ZSH=$HOME/.dotfiles
 export PROJECTS=~/src
 export GOPATH=$HOME/go
 export PATH="/Applications/Postgres93.app/Contents/MacOS/bin:$HOME/.cask/bin:$PATH:$GOPATH/bin:/Users/jroes/bin"
+export PATH=$PATH:/usr/local/Cellar/go/1.2/libexec/bin
+export GOROOT=`go env GOROOT`
 
 # use .localrc for SUPER SECRET CRAP that you don't
 # want in your public, versioned repo.

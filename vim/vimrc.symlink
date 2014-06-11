@@ -16,6 +16,7 @@ Bundle 'tpope/vim-sensible'
 Bundle 'Keithbsmiley/investigate.vim'
 Bundle 'justinmk/vim-sneak'
 Bundle 'airblade/vim-gitgutter'
+Bundle 'jnwhiteh/vim-golang'
 
 let g:sneak#streak = 1
 
