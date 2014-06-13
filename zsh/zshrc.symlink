@@ -50,3 +50,6 @@ source /usr/local/share/chruby/auto.sh
 export PATH="/usr/local/heroku/bin:$PATH"
 unsetopt correct
 bindkey -v
+
+# added by travis gem
+[ -f /Users/jroes/.travis/travis.sh ] && source /Users/jroes/.travis/travis.sh
