@@ -19,6 +19,8 @@ Bundle 'Shougo/neocomplete'
 Bundle 'Shougo/neosnippet'
 Bundle 'Shougo/neosnippet-snippets'
 Bundle 'jnwhiteh/vim-golang'
+Bundle 'scrooloose/syntastic'
+Bundle 'bling/vim-airline'
 
 let g:neocomplete#enable_at_startup = 1
 
@@ -65,6 +67,8 @@ filetype indent plugin on
 imap jk <Esc>
 noremap <space> :
 colors Tomorrow-Night
+
+set tags+=.git/tags
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " BASIC EDITING CONFIGURATION
@@ -199,6 +203,8 @@ au BufRead,BufNewFile *.html set filetype=mustache
 au BufRead,BufNewFile *.md set filetype=markdown
 
 if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor
+
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
   let g:ctrlp_user_command = 'ag %s --files-with-matches -g "" --ignore "\.git$\|\.hg$\|\.svn\|node_modules"'
 
