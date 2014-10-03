@@ -53,7 +53,6 @@ autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-
 let g:sneak#streak = 1
 
 set smartindent
@@ -62,7 +61,6 @@ set nocompatible
 set ts=2 sw=2 expandtab
 set colorcolumn=80
 syntax on
-filetype indent plugin on
 
 imap jk <Esc>
 noremap <space> :
