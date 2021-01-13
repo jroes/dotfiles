@@ -4,7 +4,7 @@ export ZSH=$HOME/.dotfiles
 # your project folder that we can `c [tab]` to
 export PROJECTS=~/src
 export GOPATH=$HOME/go
-export PATH="/Applications/Postgres93.app/Contents/MacOS/bin:$HOME/.cask/bin:$PATH:$GOPATH/bin:/Users/jroes/bin"
+export PATH="$HOME/.cask/bin:$PATH:$GOPATH/bin:/Users/jroes/bin"
 export PATH=$PATH:/usr/local/Cellar/go/1.2/libexec/bin
 export GOROOT=`go env GOROOT`
 
