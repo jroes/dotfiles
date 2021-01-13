@@ -29,7 +29,6 @@ brew 'youtube-dl'
 
 cask '1password'
 cask 'google-chrome'
-cask 'handbrake'
 cask 'slack'
 cask 'rectangle'
 cask 'vlc'
