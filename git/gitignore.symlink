@@ -2,3 +2,5 @@
 *~
 *.swp
 TAGS
+__pycache__
+.vscode/
