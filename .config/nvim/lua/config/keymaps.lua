@@ -8,6 +8,9 @@ vim.keymap.set('n', '<leader>n', '<cmd>nohlsearch<CR>', { desc = '[N]o search hi
 -- Makes saving files easier
 vim.keymap.set('n', '<leader>u', ':update<cr>', { desc = '[U]pdate file' })
 
+-- Use jk to escape insert mode
+vim.keymap.set('i', 'jk', '<Esc>')
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
