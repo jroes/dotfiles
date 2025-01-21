@@ -3,7 +3,7 @@
 1. ssh in as `root`, and run this command:
 
 ```sh
-bash <(curl https://raw.githubusercontent.com/jroes/dotfiles/main/setup/setup_bootstrap.bash)
+curl -fsSL https://raw.githubusercontent.com/jroes/dotfiles/main/setup/setup_bootstrap.bash | bash
 ```
 
 2. ssh in, this time as `jroes`, and run the same command.
