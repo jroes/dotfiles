@@ -62,19 +62,18 @@ install_dotfiles()
   then
     echo_red "Repo \"${DOTFILES_PATH}\" already exists."
   else
-    # Check whether we can log into github. If not, something is wrong.
-    if [ ! -S "$SSH_AUTH_SOCK" ];
-    then
-      echo "Unable to log into Github. Exiting."
-      exit 255
-    fi
-
-    # Clone the repo
+    # Try SSH first, fall back to HTTPS if SSH fails
     git clone -b ${GIT_BRANCH} ${GIT_REPO}
     if [[ $? -ne 0 ]];
     then
-      echo_red "Failed to clone branch \"${GIT_BRANCH}\" from \"${GIT_REPO}\"."
-      exit 1
+      echo "SSH clone failed, trying HTTPS..."
+      GIT_REPO="https://github.com/jroes/dotfiles.git"
+      git clone -b ${GIT_BRANCH} ${GIT_REPO}
+      if [[ $? -ne 0 ]];
+      then
+        echo_red "Failed to clone branch \"${GIT_BRANCH}\" using both SSH and HTTPS."
+        exit 1
+      fi
     fi
   fi
 
