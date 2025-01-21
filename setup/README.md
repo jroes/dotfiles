@@ -1,4 +1,4 @@
-# Adrien's DigitalOcean Dev Env
+# Jon's DigitalOcean Dev Env
 
 # Todo #1. Instal rust
 
