@@ -26,8 +26,9 @@ def setup_root():
        ],
    )
 
-   # Install netstat
+   # Install netstat and mosh
    setup_utils.cached_apt_install("net-tools")
+   setup_utils.cached_apt_install("mosh")
 
    # Install fancy search tools
    setup_utils.cached_apt_install("ripgrep")
@@ -97,6 +98,8 @@ def setup_root():
        "Turn on the firewall",
        [
            "sudo ufw allow ssh",
+           # Allow mosh UDP ports (60000:61000 is the default range)
+           "sudo ufw allow 60000:61000/udp",
            "echo y | sudo ufw enable",
        ],
    )
