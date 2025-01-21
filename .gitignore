@@ -21,3 +21,4 @@ original_dotfiles
 setup/venv
 setup/backup
 setup/__pycache__
+.aider*

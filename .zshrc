@@ -41,6 +41,9 @@ elif [[ -z ${API_WARNING_SHOWN} ]]; then
     export API_WARNING_SHOWN=1
 fi
 
+# Load private env vars
+source ~/.private_env_vars
+
 # Fzf config
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
@@ -48,3 +51,5 @@ FZF_CONFIG=${HOME}/.config/fzf/0.44.1
 [ -f ${FZF_CONFIG}/completion.zsh ] && source ${FZF_CONFIG}/completion.zsh
 [ -f ${FZF_CONFIG}/key-bindings.zsh ] && source ${FZF_CONFIG}/key-bindings.zsh
 ls -lah ${FZF_CONFIG}
+
+. "$HOME/.local/bin/env"
