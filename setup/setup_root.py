@@ -87,7 +87,7 @@ def setup_root():
    )
 
    # Create a user to SSH into this box.
-   create_user("adrien")
+   create_user("jroes")
 
    # Lock down ssh logins
    lock_down_ssh()

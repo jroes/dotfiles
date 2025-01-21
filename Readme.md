@@ -3,10 +3,10 @@
 1. ssh in as `root`, and run this command:
 
 ```sh
-bash <(curl https://raw.githubusercontent.com/treuille/dotfiles/main/setup/setup_bootstrap.bash)
+bash <(curl https://raw.githubusercontent.com/jroes/dotfiles/main/setup/setup_bootstrap.bash)
 ```
 
-2. ssh in, this time as `adrien`, and run the same command.
+2. ssh in, this time as `jroes`, and run the same command.
 
 3. copy over the OpenAI key as follows:
 
@@ -69,7 +69,7 @@ Make sure your SSH config has the following structure:
 Host <HOST>
      HostName <IP ADDRESS>
      Port 22
-     User adrien
+     User jroes
      ForwardAgent yes
      AddKeysToAgent yes
      IdentitiesOnly yes

@@ -4,7 +4,7 @@
 
 ## Install rust itself
 ```sh
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | CARGO_HOME=/home/adrien/.local/rust/cargo RUSTUP_HOME=/home/adrien/.local/rust/rustup sh
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | CARGO_HOME=/home/jroes/.local/rust/cargo RUSTUP_HOME=/home/jroes/.local/rust/rustup sh
 ```
 
 
@@ -105,23 +105,23 @@ add the `Blink@Elbowpads` key and go remote, my brother!
 ssh devs
 ```
 
-Get the raw URL for [this page](https://github.com/treuille/dev-env/blob/master/dev-env/install.bash) and run:
+Get the raw URL for [this page](https://github.com/jroes/dev-env/blob/master/dev-env/install.bash) and run:
 ```sh
 bash <(curl "RAW_URL")
 ```
 
 For example:
 ```sh
-bash <(curl "https://raw.githubusercontent.com/treuille/dev-env/main/dev-env/install.bash?token=AAMYONPNMWD5T64VOLQH3WTAVFFL6")
+bash <(curl "https://raw.githubusercontent.com/jroes/dev-env/main/dev-env/install.bash?token=AAMYONPNMWD5T64VOLQH3WTAVFFL6")
 ```
 
-Type in `adrien`'s password at the right time, then reboot:
+Type in `jroes`'s password at the right time, then reboot:
 
 ```sh
 shutdown -r now
 ```
 
-Change the login to `adrien` the login again and rerun the install script.
+Change the login to `jroes` the login again and rerun the install script.
 
 Then run `nvim` and `:PlugInstall`
 

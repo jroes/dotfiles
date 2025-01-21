@@ -8,7 +8,7 @@
 #     - not root: setup_user.py
 
 # Variables
-GIT_REPO="git@github.com:treuille/dotfiles.git"
+GIT_REPO="git@github.com:jroes/dotfiles.git"
 GIT_BRANCH="main"
 DOTFILES_PATH="dotfiles"
 SETUP_PATH="${DOTFILES_PATH}/setup"
