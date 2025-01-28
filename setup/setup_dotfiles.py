@@ -70,14 +70,25 @@ def install_tmux_plugins():
     tmux_plugin_path = os.path.expanduser("~/.config/tmux/plugins")
     tpm_plugin_path = os.path.join(tmux_plugin_path, "tpm")
     tpm_plugin_repo = "https://github.com/tmux-plugins/tpm"
+    
+    # Create plugin directory if it doesn't exist
+    if not os.path.exists(tmux_plugin_path):
+        setup_utils.cached_run(
+            "Creating tmux plugin directory",
+            [f"mkdir -pv {tmux_plugin_path}"],
+        )
+    
+    # Install TPM if not present
+    if not os.path.exists(tpm_plugin_path):
+        setup_utils.cached_run(
+            "Installing the tmux plugin manager",
+            [f"git clone {tpm_plugin_repo} {tpm_plugin_path}"],
+        )
+    
+    # Install/update plugins
     setup_utils.cached_run(
-        "Installing the tmux plugin manager",
-        [
-            f"mkdir -pv {tmux_plugin_path}",
-            f"git clone {tpm_plugin_repo} {tpm_plugin_path}",
-            f"{tpm_plugin_path}/bindings/install_plugins || true",
-        ],
-        skip_if=os.path.exists(os.path.expanduser(tpm_plugin_path)),
+        "Installing/updating tmux plugins",
+        [f"{tpm_plugin_path}/bindings/install_plugins || true"],
     )
 
 
@@ -112,42 +123,56 @@ def install_asdf():
     
     # Add plugins and install latest versions
     asdf_bin = os.path.join(asdf_path, "bin/asdf")
-    setup_utils.cached_run(
-        "Installing asdf plugins",
-        [
-            f"{asdf_bin} plugin add nodejs",
-            f"{asdf_bin} plugin add ruby",
-            f"{asdf_bin} install nodejs latest",
-            f"{asdf_bin} install ruby latest",
-            f"{asdf_bin} global nodejs latest",
-            f"{asdf_bin} global ruby latest",
-        ],
-    )
+    # Check for existing plugins
+    nodejs_plugin = os.path.join(asdf_path, "plugins/nodejs")
+    ruby_plugin = os.path.join(asdf_path, "plugins/ruby")
+    
+    if not os.path.exists(nodejs_plugin):
+        setup_utils.cached_run(
+            "Installing nodejs plugin for asdf",
+            [
+                f"{asdf_bin} plugin add nodejs",
+                f"{asdf_bin} install nodejs latest",
+                f"{asdf_bin} global nodejs latest",
+            ],
+        )
+    
+    if not os.path.exists(ruby_plugin):
+        setup_utils.cached_run(
+            "Installing ruby plugin for asdf",
+            [
+                f"{asdf_bin} plugin add ruby",
+                f"{asdf_bin} install ruby latest",
+                f"{asdf_bin} global ruby latest",
+            ],
+        )
 
 
 def install_rust():
-    """Installs in the home directory."""
-    # Install rust itself.
+    """Installs rust in the home directory."""
     home_path = os.path.expanduser("~")
     cargo_home = os.path.join(home_path, ".local/rust/cargo")
     rustup_home = os.path.join(home_path, ".local/rust/rustup")
     rust_env = f"CARGO_HOME={cargo_home} RUSTUP_HOME={rustup_home}"
-    setup_utils.cached_run(
-        "Installing rust",
-        [f"curl https://sh.rustup.rs -sSf | {rust_env} sh -s -- -y"],
-        skip_if=(os.path.exists(cargo_home) and os.path.exists(rustup_home)),
-    )
-
-    # Additional rust configuration.
     rustup_bin = os.path.join(cargo_home, "bin/rustup")
-    # cargo_bin = os.path.join(cargo_home, "bin/cargo")
-    setup_utils.cached_run(
-        "Configuring rust",
-        [
-            f"{rust_env} {rustup_bin} default stable",
-            f"{rust_env} {rustup_bin} component add rust-analyzer",
-        ],
-    )
+
+    # Install rust if not present
+    if not os.path.exists(cargo_home) or not os.path.exists(rustup_home):
+        setup_utils.cached_run(
+            "Installing rust",
+            [f"curl https://sh.rustup.rs -sSf | {rust_env} sh -s -- -y"],
+        )
+
+    # Update and configure rust components
+    if os.path.exists(rustup_bin):
+        setup_utils.cached_run(
+            "Updating and configuring rust",
+            [
+                f"{rust_env} {rustup_bin} update",
+                f"{rust_env} {rustup_bin} default stable",
+                f"{rust_env} {rustup_bin} component add rust-analyzer",
+            ],
+        )
 
 
 def main():
