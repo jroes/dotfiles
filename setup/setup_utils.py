@@ -1,6 +1,6 @@
 """
 This file lets you run a set of commands and cache them so that they
-they needn't be run a second time.
+they needn't be run a second time. Supports both Linux and macOS.
 """
 
 from termcolor import cprint
@@ -11,9 +11,19 @@ import pickle
 import subprocess
 from typing import Optional
 import platform
+import shutil
 
-# This is the command to install apt packages
+def is_macos():
+    """Check if running on macOS."""
+    return platform.system() == "Darwin"
+
+def is_linux():
+    """Check if running on Linux."""
+    return platform.system() == "Linux"
+
+# Platform-specific package installation commands
 APT_INSTALL = "sudo DEBIAN_FRONTEND=noninteractive apt install -y"
+BREW_INSTALL = "brew install"
 
 def machine_is_arm64():
     """Determine if the machine architecture is ARM64."""
@@ -60,13 +70,28 @@ def cached_run(title, commands, skip_if=False):
     print()
 
 
-def cached_apt_install(package: str, title: Optional[str] = None):
-    """Istall a package using apt and the cached_run mechanism."""
-    # Give a standard title if none given
-    if title == None:
+def cached_package_install(package: str, title: Optional[str] = None):
+    """Install a package using the appropriate package manager for the platform."""
+    if title is None:
         title = "Installing " + package
 
-    # Run apt install on the package
+    if is_macos():
+        if not shutil.which("brew"):
+            cprint("Homebrew not found. Please install it first.", "red", attrs=["bold"])
+            sys.exit(1)
+        cached_run(title, [f"{BREW_INSTALL} {package}"])
+    else:
+        cached_run(title, [f"{APT_INSTALL} {package}"])
+
+def cached_apt_install(package: str, title: Optional[str] = None):
+    """Install a package using apt and the cached_run mechanism (Linux only)."""
+    if is_macos():
+        cprint("Warning: apt-get is not available on macOS", "yellow", attrs=["bold"])
+        return
+    
+    if title is None:
+        title = "Installing " + package
+
     cached_run(title, [f"{APT_INSTALL} {package}"])
 
 

@@ -1,9 +1,11 @@
 """
-TODO: Add documentation
+Cross-platform dotfiles setup script supporting Linux and macOS.
+Handles installation of development tools and configuration files.
 """
 
 import setup_utils
 import os
+import sys
 from termcolor import cprint
 
 
@@ -104,8 +106,8 @@ def install_bun():
 
 
 def install_direnv():
-    """Install direnv using apt."""
-    setup_utils.cached_apt_install("direnv", "Installing direnv")
+    """Install direnv using the appropriate package manager."""
+    setup_utils.cached_package_install("direnv", "Installing direnv")
 
 
 def install_asdf():
@@ -177,6 +179,17 @@ def install_rust():
 
 def main():
     """Execution starts here."""
+    # Check for required tools
+    if setup_utils.is_macos():
+        if not os.path.exists("/usr/local/bin/brew") and not os.path.exists("/opt/homebrew/bin/brew"):
+            setup_utils.cached_run(
+                "Installing Homebrew",
+                ['/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'],
+            )
+    elif not setup_utils.is_linux():
+        cprint("This script only supports macOS and Linux.", "red", attrs=["bold"])
+        sys.exit(1)
+
     install_pure()
     install_dotfiles()
     install_tmux_plugins()
