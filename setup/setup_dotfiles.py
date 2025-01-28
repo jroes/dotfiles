@@ -7,10 +7,23 @@ import os
 import sys
 import subprocess
 
+def ensure_pip():
+    """Ensure pip is installed."""
+    try:
+        subprocess.check_call([sys.executable, "-m", "ensurepip", "--upgrade"])
+    except subprocess.CalledProcessError:
+        if setup_utils.is_linux():
+            subprocess.check_call(["sudo", "apt", "install", "-y", "python3-pip"])
+        elif setup_utils.is_macos():
+            subprocess.check_call(["brew", "install", "python3"])
+        else:
+            raise SystemError("Unsupported platform")
+
 def ensure_dependencies():
     """Install required Python packages."""
+    ensure_pip()
     requirements_file = os.path.join(os.path.dirname(__file__), "requirements.txt")
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", requirements_file])
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "--user", "-r", requirements_file])
 
 # Install dependencies before importing them
 ensure_dependencies()
