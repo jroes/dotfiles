@@ -3,9 +3,19 @@ Cross-platform dotfiles setup script supporting Linux and macOS.
 Handles installation of development tools and configuration files.
 """
 
-import setup_utils
 import os
 import sys
+import subprocess
+
+def ensure_dependencies():
+    """Install required Python packages."""
+    requirements_file = os.path.join(os.path.dirname(__file__), "requirements.txt")
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", requirements_file])
+
+# Install dependencies before importing them
+ensure_dependencies()
+
+import setup_utils
 from termcolor import cprint
 
 
@@ -179,6 +189,8 @@ def install_rust():
 
 def main():
     """Execution starts here."""
+    # Ensure dependencies are installed
+    ensure_dependencies()
     # Check for required tools
     if setup_utils.is_macos():
         if not os.path.exists("/usr/local/bin/brew") and not os.path.exists("/opt/homebrew/bin/brew"):
