@@ -6,15 +6,29 @@ Handles installation of development tools and configuration files.
 import os
 import sys
 import subprocess
+import platform
+
+def is_macos():
+    """Check if running on macOS."""
+    return platform.system() == "Darwin"
+
+def is_linux():
+    """Check if running on Linux."""
+    return platform.system() == "Linux"
 
 def ensure_pip():
     """Ensure pip is installed."""
     try:
-        subprocess.check_call([sys.executable, "-m", "ensurepip", "--upgrade"])
+        # Try using get-pip.py as it's more reliable across platforms
+        subprocess.check_call([
+            "curl", "-sSL", "https://bootstrap.pypa.io/get-pip.py", 
+            "-o", "/tmp/get-pip.py"
+        ])
+        subprocess.check_call(["sudo", sys.executable, "/tmp/get-pip.py"])
     except subprocess.CalledProcessError:
-        if setup_utils.is_linux():
+        if is_linux():
             subprocess.check_call(["sudo", "apt", "install", "-y", "python3-pip"])
-        elif setup_utils.is_macos():
+        elif is_macos():
             subprocess.check_call(["brew", "install", "python3"])
         else:
             raise SystemError("Unsupported platform")
@@ -23,7 +37,11 @@ def ensure_dependencies():
     """Install required Python packages."""
     ensure_pip()
     requirements_file = os.path.join(os.path.dirname(__file__), "requirements.txt")
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "--user", "-r", requirements_file])
+    try:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "--user", "-r", requirements_file])
+    except subprocess.CalledProcessError:
+        # Fallback to using pip3 directly if module method fails
+        subprocess.check_call(["pip3", "install", "--user", "-r", requirements_file])
 
 # Install dependencies before importing them
 ensure_dependencies()
