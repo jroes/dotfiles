@@ -29,18 +29,6 @@ fpath+=(${HOME}/.local/share/zsh/pure)
 autoload -U promptinit; promptinit
 prompt pure
 
-# Add API keys for OpenAI and Anthropic
-API_KEY_FILE=${HOME}/.config/nvim/api_keys.toml
-RED="\033[31m"
-RESET="\033[0m"
-if [[ -f ${API_KEY_FILE} ]]; then
-    export OPENAI_API_KEY=$(awk -F'= *"|"' '/^openai/ {print $2}' ${API_KEY_FILE})
-    export ANTHROPIC_API_KEY=$(awk -F'= *"|"' '/^anthropic/ {print $2}' ${API_KEY_FILE})
-elif [[ -z ${API_WARNING_SHOWN} ]]; then
-    echo "${RED}Warning: ${API_KEY_FILE} not found${RESET}"
-    export API_WARNING_SHOWN=1
-fi
-
 # Load private env vars
 source ~/.private_env_vars
 
@@ -53,3 +41,16 @@ FZF_CONFIG=${HOME}/.config/fzf/0.44.1
 ls -lah ${FZF_CONFIG}
 
 . "$HOME/.local/bin/env"
+export TERM=xterm-256color
+
+. "$HOME/.asdf/asdf.sh"
+
+# bun completions
+[ -s "/home/jroes/.bun/_bun" ] && source "/home/jroes/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# direnv
+eval "$(direnv hook zsh)"
