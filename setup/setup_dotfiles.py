@@ -81,6 +81,50 @@ def install_tmux_plugins():
     )
 
 
+def install_bun():
+    """Install bun runtime in the home directory."""
+    home_path = os.path.expanduser("~")
+    bun_path = os.path.join(home_path, ".bun")
+    setup_utils.cached_run(
+        "Installing bun",
+        ["curl -fsSL https://bun.sh/install | bash"],
+        skip_if=os.path.exists(bun_path),
+    )
+
+
+def install_direnv():
+    """Install direnv using apt."""
+    setup_utils.cached_apt_install("direnv", "Installing direnv")
+
+
+def install_asdf():
+    """Install asdf version manager and plugins."""
+    home_path = os.path.expanduser("~")
+    asdf_path = os.path.join(home_path, ".asdf")
+    asdf_repo = "https://github.com/asdf-vm/asdf.git"
+    
+    # Install asdf
+    setup_utils.cached_run(
+        "Installing asdf version manager",
+        [f"git clone {asdf_repo} {asdf_path}"],
+        skip_if=os.path.exists(asdf_path),
+    )
+    
+    # Add plugins and install latest versions
+    asdf_bin = os.path.join(asdf_path, "bin/asdf")
+    setup_utils.cached_run(
+        "Installing asdf plugins",
+        [
+            f"{asdf_bin} plugin add nodejs",
+            f"{asdf_bin} plugin add ruby",
+            f"{asdf_bin} install nodejs latest",
+            f"{asdf_bin} install ruby latest",
+            f"{asdf_bin} global nodejs latest",
+            f"{asdf_bin} global ruby latest",
+        ],
+    )
+
+
 def install_rust():
     """Installs in the home directory."""
     # Install rust itself.
@@ -112,8 +156,11 @@ def main():
     install_dotfiles()
     install_tmux_plugins()
     install_rust()
+    install_bun()
+    install_direnv()
+    install_asdf()
 
-    cprint("Everythign installed. To get all the goodies, run:", "blue", attrs=["bold"])
+    cprint("Everything installed. To get all the goodies, run:", "blue", attrs=["bold"])
     print(". ~/.zshrc")
 
 
