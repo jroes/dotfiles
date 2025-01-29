@@ -54,3 +54,6 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 # direnv
 eval "$(direnv hook zsh)"
+
+export FLYCTL_INSTALL="/home/jroes/.fly"
+export PATH="$FLYCTL_INSTALL/bin:$PATH"
