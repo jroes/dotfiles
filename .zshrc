@@ -1,3 +1,11 @@
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
+
 # Python venv
 alias venv-activate="source .venv/bin/activate"
 alias venv-create="python3 -m venv .venv ; venv-activate"
@@ -41,7 +49,7 @@ FZF_CONFIG=${HOME}/.config/fzf/0.44.1
 ls -lah ${FZF_CONFIG}
 
 . "$HOME/.local/bin/env"
-export TERM=xterm-256color
+export TERM=screen-256color
 
 . "$HOME/.asdf/asdf.sh"
 
