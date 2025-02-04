@@ -59,6 +59,7 @@ else
 fi
 
 if [ -f ~/.work_settings.sh ]; then
+    source ~/.work_settings.sh
 fi
 
 export TERM=xterm-256color
