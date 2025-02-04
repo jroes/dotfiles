@@ -11,6 +11,9 @@ vim.keymap.set('n', '<leader>u', ':update<cr>', { desc = '[U]pdate file' })
 -- Use jk to escape insert mode
 vim.keymap.set('i', 'jk', '<Esc>')
 
+-- Use <leader>y to copy to system clipboard
+vim.keymap.set('v', '<leader>y', '"+y')
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
