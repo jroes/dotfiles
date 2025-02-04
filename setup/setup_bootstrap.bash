@@ -92,14 +92,39 @@ install_python_venv()
   # apt install python3.12-venv
   PYTHON_VENV_PACKAGE="python3.12-venv"
   start_block "Installing ${PYTHON_VENV_PACKAGE}."
-  sudo dpkg -s ${PYTHON_VENV_PACKAGE} &> /dev/null
-  if [[ $? -eq 0 ]];
-  then
-    echo_red "The package ${PYTHON_VENV_PACKAGE} already exists."
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    brew install python@3.12
   else
-    sudo DEBIAN_FRONTEND=noninteractive apt update -y
-    sudo DEBIAN_FRONTEND=noninteractive apt upgrade -y
-    sudo DEBIAN_FRONTEND=noninteractive apt install ${PYTHON_VENV_PACKAGE} -y
+    sudo dpkg -s ${PYTHON_VENV_PACKAGE} &> /dev/null
+    if [[ $? -eq 0 ]];
+    then
+      echo_red "The package ${PYTHON_VENV_PACKAGE} already exists."
+    else
+      sudo DEBIAN_FRONTEND=noninteractive apt update -y
+      sudo DEBIAN_FRONTEND=noninteractive apt upgrade -y
+      sudo DEBIAN_FRONTEND=noninteractive apt install ${PYTHON_VENV_PACKAGE} -y
+    fi
+  fi
+  end_block
+}
+
+# Install tmux if not already installed
+install_tmux()
+{
+  start_block "Installing tmux"
+  if command -v tmux &> /dev/null
+  then
+    echo_red "tmux is already installed."
+  else
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+      brew install tmux
+    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+      sudo apt update -y
+      sudo apt install tmux -y
+    else
+      echo_red "Unsupported OS for tmux installation."
+      exit 1
+    fi
   fi
   end_block
 }
@@ -112,7 +137,7 @@ setup_venv()
   then
     echo_red "Virtual environment \"${VENV_PATH}\" already exists."
   else
-    python3 -m venv "${VENV_PATH}"
+    python3 -m venv --system-site-packages "${VENV_PATH}"
     if [[ $? -ne 0 ]];
     then
       echo_red "Failed to create virtual environment."
@@ -142,8 +167,12 @@ run_python_script()
 }
 
 # Actually run the script
-prevent_restart_dialog
+if [ $IS_ROOT -eq 0 ] && [[ "$OSTYPE" != "darwin"* ]]; then
+  prevent_restart_dialog
+  install_python_venv
+fi
+
 install_dotfiles
-install_python_venv
+install_tmux
 setup_venv
 run_python_script

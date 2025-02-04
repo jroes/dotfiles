@@ -47,10 +47,21 @@ FZF_CONFIG=${HOME}/.config/fzf/0.44.1
 [ -f ${FZF_CONFIG}/completion.zsh ] && source ${FZF_CONFIG}/completion.zsh
 [ -f ${FZF_CONFIG}/key-bindings.zsh ] && source ${FZF_CONFIG}/key-bindings.zsh
 
-. "$HOME/.local/bin/env"
-export TERM=screen-256color
+os_name=$(uname -s)
 
-. "$HOME/.asdf/asdf.sh"
+if [ "$os_name" = "Linux" ]; then
+    . "$HOME/.local/bin/env"
+
+elif [ "$os_name" = "Darwin" ]; then
+    . /opt/homebrew/opt/asdf/libexec/asdf.sh
+else
+    echo "Unsupported OS: $os_name"
+fi
+
+if [ -f ~/.work_settings.sh ]; then
+fi
+
+export TERM=xterm-256color
 
 # bun completions
 [ -s "/home/jroes/.bun/_bun" ] && source "/home/jroes/.bun/_bun"

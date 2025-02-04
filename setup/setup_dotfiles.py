@@ -128,6 +128,14 @@ def install_tmux_plugins():
             [f"git clone {tpm_plugin_repo} {tpm_plugin_path}"],
         )
     
+    # Start a tmux session if not running
+    if subprocess.call(["tmux", "has-session"], stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL) != 0:
+        subprocess.call(["tmux", "new-session", "-d"])
+    
+    # Ensure cache directory exists
+    cache_dir = os.path.expanduser("~/.local/cache/digital_ocean_setup")
+    os.makedirs(cache_dir, exist_ok=True)
+    
     # Install/update plugins
     setup_utils.cached_run(
         "Installing/updating tmux plugins",
