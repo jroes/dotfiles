@@ -32,21 +32,25 @@ return {
             vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
 
+          map('<leader>gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
+          map('<leader>gr', vim.lsp.buf.references, '[G]oto [R]eferences')
+          map('<leader>gf', vim.lsp.buf.format, '[G] [F]ormat')
+
           -- NOTE: Moved to fzf-lua
           -- Jump to the definition of the word under your cursor. (To jump back, press <C-t>.)
-          -- map('gD', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+          -- map('<leader>gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
           -- NOTE: Moved to fzf-lua
           -- Find references for the word under your cursor.
-          -- map('gR', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+          -- map('<leader>gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
 
           -- NOTE: Moved to fzf-lua
           -- Jump to the implementation of the word under your cursor.
-          -- map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+          --map('<leader>gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
 
           -- NOTE: Moved to fzf-lua
           -- Jump to the type of the word under your cursor.
-          -- map('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
+          --map('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
 
           -- NOTE: Moved to fzf-lua
           -- Toggle inlay hints
@@ -129,7 +133,7 @@ return {
       }
 
       -- WARN: This might be on startup. Delete if so.
-      vim.cmd 'MasonToolsUpdateSync'
+      -- vim.cmd 'MasonToolsUpdateSync'
 
       -- Setup basedpyright for Python projects
       require('lspconfig').basedpyright.setup {
@@ -175,6 +179,19 @@ return {
           vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
         end,
       }
+
+      local function get_ruby_path()
+        return vim.fn.trim(vim.fn.system 'asdf which ruby-lsp')
+      end
+
+      local lspconfig = require 'lspconfig'
+      lspconfig.ruby_lsp.setup {
+        capabilities = capabilities,
+        cmd = { get_ruby_path() },
+        filetypes = { 'ruby' },
+        root_dir = lspconfig.util.root_pattern('Gemfile', '.git'),
+      }
+      -- Get the correct Ruby version from asdf
 
       -- {
       --   handlers = {

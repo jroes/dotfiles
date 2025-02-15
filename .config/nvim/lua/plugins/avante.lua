@@ -15,7 +15,7 @@ return {
   opts = {
     -- add any opts here
     provider = 'claude', -- 'openai',
-    auto_suggestions_provider = 'copilot',
+    -- auto_suggestions_provider = 'copilot',
     openai = {
       model = 'gpt-4o',
     },
@@ -23,10 +23,9 @@ return {
       model = 'claude-3-5-sonnet-20241022',
     },
 
-    -- NOTE: Commented out becuase configuring diretly in zbirenbaum/copilot
-    -- behaviour = {
-    --   auto_suggestions = true,
-    -- },
+    behaviour = {
+      auto_suggestions = false,
+    },
 
     hints = {
       enabled = false,
@@ -51,6 +50,6 @@ return {
     'nvim-tree/nvim-web-devicons', -- or echasnovski/mini.icons
 
     -- [optional] for providers='copilot'
-    'zbirenbaum/copilot.lua',
+    -- 'zbirenbaum/copilot.lua',
   },
 }
