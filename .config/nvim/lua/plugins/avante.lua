@@ -14,8 +14,8 @@ return {
 
   opts = {
     -- add any opts here
-    provider = 'claude', -- 'openai',
-    -- auto_suggestions_provider = 'copilot',
+    provider = 'copilot', -- 'openai',
+    auto_suggestions_provider = 'copilot',
     openai = {
       model = 'gpt-4o',
     },
